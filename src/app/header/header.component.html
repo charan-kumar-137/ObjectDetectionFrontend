@@ -1,13 +1,14 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button aria-label="Example icon-button with menu icon">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>User DashBoard</span>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+  </mat-menu>
+  <a routerLink="/">User Dashboard</a>
   <span class="example-spacer"></span>
-  <button mat-icon-button aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button>
+  <a routerLink="/login" mat-icon-button>
+    <mat-icon>account_circle</mat-icon>
+  </a>
 </mat-toolbar>

@@ -1,0 +1,23 @@
+<app-header></app-header>
+
+<mat-card>
+  <mat-card-title>Preview</mat-card-title>
+    <mat-card-header>
+
+        <button mat-fab color="primary" (click)="start()">
+            <mat-icon>play_circle</mat-icon>
+        </button>
+        <button mat-fab >
+            <mat-icon>stop_circle</mat-icon>
+        </button>
+    </mat-card-header>
+    <mat-card-content>
+        <video id="preview"  autoplay muted>hello</video>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="accent">Upload</button>
+        <button mat-raised-button color="warn">Discard</button>
+    </mat-card-actions>
+  
+</mat-card>
+

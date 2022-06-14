@@ -1,1 +1,42 @@
-<p>register works!</p>
+<app-header></app-header>
+
+<mat-card>
+  <mat-card-title>Register</mat-card-title>
+  <mat-card-subtitle> Please fill in your details </mat-card-subtitle>
+  <mat-card-content>
+    <form [formGroup]="registerForm" method="post" (submit)="onSubmit()">
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <mat-form-field appearance="standard">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" />
+            <mat-error *ngIf="registerForm.get('email')?.errors"
+              >Invalid Email</mat-error
+            >
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-form-field appearance="standard">
+            <mat-label>Name</mat-label>
+            <input type="text" matInput formControlName="name" />
+            <mat-error *ngIf="registerForm.get('name')?.errors"
+              >Invalid Name</mat-error
+            >
+          </mat-form-field>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-form-field appearance="standard">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password" />
+            <mat-error *ngIf="registerForm.get('password')?.errors"
+              >Invalid Password</mat-error
+            >
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+
+      <button type="submit" mat-raised-button>Submit</button>
+    </form>
+  </mat-card-content>
+</mat-card>
