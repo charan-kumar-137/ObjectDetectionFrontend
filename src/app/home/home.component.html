@@ -1,7 +1,161 @@
 <app-header></app-header>
-<!-- <mat-card>Simple card</mat-card> -->
-<mat-grid-list cols="2" rowHeight="2:1">
-  <mat-grid-tile><mat-card>Simple card</mat-card> </mat-grid-tile>
-  <mat-grid-tile><mat-card>Simple card</mat-card> </mat-grid-tile>
-  <mat-grid-tile><mat-card>Simple card</mat-card> </mat-grid-tile>
-</mat-grid-list>
+
+<div class="wrapper">
+  <div class="box video-list" cdkDrag>
+    Video List
+    <cdk-accordion class="example-accordion">
+      <cdk-accordion-item
+        *ngFor="let item of video_list; let index = index"
+        #accordionItem="cdkAccordionItem"
+        class="example-accordion-item"
+        role="button"
+        tabindex="0"
+        [attr.id]="'accordion-header-' + index"
+        [attr.aria-expanded]="accordionItem.expanded"
+        [attr.aria-controls]="'accordion-body-' + index"
+      >
+        <div
+          class="example-accordion-item-header"
+          (click)="accordionItem.toggle()"
+        >
+          {{ index + 1 }}
+          <span class="example-accordion-item-description">
+            <mat-icon *ngIf="accordionItem.expanded"> visibility_off </mat-icon>
+            <mat-icon *ngIf="!accordionItem.expanded"> visibility </mat-icon>
+          </span>
+        </div>
+        <div
+          class="example-accordion-item-body"
+          role="region"
+          [style.display]="accordionItem.expanded ? '' : 'none'"
+          [attr.id]="'accordion-body-' + index"
+          [attr.aria-labelledby]="'accordion-header-' + index"
+        >
+          <div *ngIf="video_list[index].isProcessed">
+            <a
+              href="http://localhost:8000/web/video/download/{{ item.id }}"
+              target="_blank"
+              >Download Processed Video</a
+            >
+            <video
+              class="display-video"
+              src="http://localhost:8000{{ item.video }}"
+              controls
+            >
+              No Video Support in your browser
+            </video>
+          </div>
+          <div *ngIf="!video_list[index].isProcessed">
+            <form (ngSubmit)="OnProcessVideo(video_list[index].id)">
+              <video
+                class="display-video"
+                src="http://localhost:8000{{ item.video }}"
+                controls
+              >
+                No Video Support in your browser
+              </video>
+              <button mat-raised-button type="submit">Process</button>
+            </form>
+          </div>
+        </div>
+      </cdk-accordion-item>
+    </cdk-accordion>
+  </div>
+  <div class="box b" cdkDrag>
+    <form
+      method="post"
+      (submit)="onSubmitVideo($event)"
+      (change)="onChangeVideo($event)"
+    >
+      <input
+        type="file"
+        name="video"
+        id="file"
+        accept="video/mp4,video/x-m4v,video/*"
+        class="inputfile"
+        required
+      />
+      <label for="file">
+        <mat-icon>upload_file</mat-icon>
+        {{ videoFileName || "Choose a Video" }}</label
+      >
+      <button type="submit" class="submit-button" mat-raised-button>
+        Upload
+      </button>
+    </form>
+  </div>
+  <div class="box c" cdkDrag>
+    Image List
+    <cdk-accordion class="example-accordion">
+      <cdk-accordion-item
+        *ngFor="let item of image_list; let index = index"
+        #accordionItem="cdkAccordionItem"
+        class="example-accordion-item"
+        role="button"
+        tabindex="0"
+        [attr.id]="'accordion-header-' + index"
+        [attr.aria-expanded]="accordionItem.expanded"
+        [attr.aria-controls]="'accordion-body-' + index"
+      >
+        <div
+          class="example-accordion-item-header"
+          (click)="accordionItem.toggle()"
+        >
+          {{ index + 1 }}
+          <span class="example-accordion-item-description">
+            <mat-icon *ngIf="accordionItem.expanded"> visibility_off </mat-icon>
+            <mat-icon *ngIf="!accordionItem.expanded"> visibility </mat-icon>
+          </span>
+        </div>
+        <div
+          class="example-accordion-item-body"
+          role="region"
+          [style.display]="accordionItem.expanded ? '' : 'none'"
+          [attr.id]="'accordion-body-' + index"
+          [attr.aria-labelledby]="'accordion-header-' + index"
+        >
+          <img
+            src="http://localhost:8000{{
+              imageOrig ? item.image : item.processed_image
+            }}"
+            alt="Not Processed"
+            class="display-img"
+          />
+          <div *ngIf="image_list[index].processed_image">
+            <mat-slide-toggle (change)="toggleImage()"
+              >Processed</mat-slide-toggle
+            >
+          </div>
+          <div *ngIf="!image_list[index].processed_image">
+            <form (ngSubmit)="onProcessImage(image_list[index].id)">
+              <button mat-raised-button type="submit">Process</button>
+            </form>
+          </div>
+        </div>
+      </cdk-accordion-item>
+    </cdk-accordion>
+  </div>
+  <div class="box d" cdkDrag>
+    <form
+      method="post"
+      (submit)="onSubmitImage($event)"
+      (change)="onChangeImage($event)"
+    >
+      <input
+        type="file"
+        name="image"
+        id="image"
+        accept="image/png, image/gif, image/jpeg, image/*"
+        class="inputfile"
+        required
+      />
+      <label for="image">
+        <mat-icon>upload_file</mat-icon>
+        {{ imageFileName || "Choose a image" }}</label
+      >
+      <button type="submit" class="submit-button" mat-raised-button>
+        Upload
+      </button>
+    </form>
+  </div>
+</div>

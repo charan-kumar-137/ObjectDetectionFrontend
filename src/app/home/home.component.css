@@ -1,10 +1,100 @@
-mat-grid-tile {
-    background: lightblue;
-    padding: 0;
-  }
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.inputfile + label {
+  font-size: 1.25em;
+  font-weight: 700;
+  display: inline-block;
+}
 
-mat-card{
-    margin: 0;
-    width: 100%;
-    height: 100%;
+.inputfile + label {
+  cursor: pointer; /* "hand" cursor */
+}
+
+.submit-button {
+  margin: 1vw;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 50vw 50vw;
+  background-color: #fff;
+  color: #444;
+  overflow: scroll;
+  padding: 1vh;
+  height: 100vh;
+}
+
+.box {
+  margin: 1vh;
+  padding: 20px;
+  font-size: 150%;
+  border: solid #3f51b5;
+  background-color: #ffffff;
+  overflow: scroll;
+  height: 50vh;
+}
+
+.cdk-overlay-container {
+  z-index: 1000;
+}
+
+.example-accordion {
+  display: block;
+  max-width: 500px;
+}
+
+.example-accordion-item {
+  display: block;
+  border: solid 1px #ccc;
+}
+
+.example-accordion-item + .example-accordion-item {
+  border-top: none;
+}
+
+.example-accordion-item-header {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.example-accordion-item-description {
+  font-size: 0.85em;
+  color: #999;
+}
+
+.example-accordion-item-header,
+.example-accordion-item-body {
+  padding: 1vh;
+}
+
+.example-accordion-item-header:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
+
+.example-accordion-item:first-child {
+  border-top-left-radius: 1vh;
+  border-top-right-radius: 1vh;
+}
+
+.example-accordion-item:last-child {
+  border-bottom-left-radius: 1vh;
+  border-bottom-right-radius: 1vh;
+}
+
+.display-img {
+  height: 40vh;
+  width: 24vw;
+}
+
+.display-video {
+  height: 40vh;
+  width: 24vw;
 }
