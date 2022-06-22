@@ -8,7 +8,11 @@
   </mat-menu>
   <a routerLink="/">User Dashboard</a>
   <span class="example-spacer"></span>
-  <a routerLink="/login" mat-icon-button>
+  <a *ngIf="!isLoggedIn" routerLink="/login" mat-icon-button>
     <mat-icon>account_circle</mat-icon>
   </a>
+
+  <button *ngIf="isLoggedIn" type="button"  mat-icon-button>
+    <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>

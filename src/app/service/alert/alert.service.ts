@@ -17,7 +17,7 @@ export class AlertService {
     this.snackBar.open(message, action, {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration: 2000,
+      duration: 5000,
     });
   }
 }

@@ -26,7 +26,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CameraComponent } from './camera/camera.component';
 import { InterceptorService } from './service/auth/interceptor.service';
-import {CdkAccordionModule} from '@angular/cdk/accordion'; 
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -58,12 +59,13 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
     DragDropModule,
     MatProgressSpinnerModule,
     CdkAccordionModule,
+    MatSlideToggleModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
-      multi:true
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

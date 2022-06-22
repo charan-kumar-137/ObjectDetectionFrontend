@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { AlertService } from '../service/alert/alert.service';
 import { FetchService } from '../service/fetch/fetch.service';
 
@@ -19,20 +15,18 @@ export class HomeComponent implements OnInit {
   baseUrl = 'localhost:8000';
   video_list: any = [];
   image_list: any = [];
+  imageOrig: boolean;
 
-  // processVideoGroup = new FormGroup({
-  //   videoId: new FormControl(null, [Validators.required, Validators.nullValidator])
-  // })
-  processVideoGroup = new FormBuilder().group({
-    videoId: new FormControl(''),
-  });
-  constructor(private fetch: FetchService, private alert: AlertService) {}
+  constructor(private fetch: FetchService, private alert: AlertService) {
+    this.imageOrig = true;
+  }
 
   ngOnInit(): void {
     this.fetch
       .get('/video/get')
       .forEach((resp) => {
         this.video_list = resp;
+        // console.log(this.video_list);
       })
       .catch((err) => console.log(err));
 
@@ -62,6 +56,9 @@ export class HomeComponent implements OnInit {
           this.alert.openSnackBar('Error while Uploading');
         });
     }
+	else{
+		this.alert.openSnackBar("No File");
+	}
   }
   onChangeVideo(event: Event): void {
     const fileList: FileList | null = (event.target as HTMLInputElement).files;
@@ -70,8 +67,20 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  OnProcessVideo(): void {
-    console.log(this.processVideoGroup.value);
+  OnProcessVideo(id: any): void {
+    const formData = new FormData();
+    formData.append('id', id);
+    this.alert.openSnackBar('Video Process Start', 'Wait');
+    this.fetch
+      .post('/video/process', formData)
+      .forEach((resp) => {
+        console.log(resp);
+        this.alert.openSnackBar('Video Process Complete', 'Check');
+      })
+      .catch((err) => {
+        console.log(err);
+        this.alert.openSnackBar('Video Process Error', 'Try Again');
+      });
   }
 
   onChangeImage(event: Event): void {
@@ -99,5 +108,27 @@ export class HomeComponent implements OnInit {
           this.alert.openSnackBar('Error while Uploading');
         });
     }
+	else{
+		this.alert.openSnackBar("No File")
+	}
+  }
+
+  toggleImage(): void {
+    this.imageOrig = !this.imageOrig;
+  }
+
+  onProcessImage(id: any): void {
+    const formData = new FormData();
+    formData.append('id', id);
+    this.alert.openSnackBar('Image Processing Start', 'Wait');
+    this.fetch
+      .post('/image/process', formData)
+      .forEach((resp) => {
+        this.alert.openSnackBar('Image Processing Complete', 'Check');
+      })
+      .catch((err) => {
+        console.log(err);
+        this.alert.openSnackBar('Image Processing Error', 'Try Again');
+      });
   }
 }

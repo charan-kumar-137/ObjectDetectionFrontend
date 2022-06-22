@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       this.authService
         .login(email, password)
         .forEach((resp) => {
-          console.log(resp)
+          // console.log(resp)
           this.alert.openSnackBar('Login Success');
           this.router.navigate([''])
         })

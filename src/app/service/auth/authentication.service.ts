@@ -37,4 +37,9 @@ export class AuthenticationService {
       first_name: name,
     });
   }
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+  }
 }

@@ -20,14 +20,31 @@ export class InterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const authToken = this.auth.getAccess();
 
-    if(authToken){
+    if (authToken) {
       const authReq = req.clone({
-        headers: req.headers.set('Authorization',"JWT " + authToken)
+        headers: req.headers.set('Authorization', 'JWT ' + authToken),
       });
 
-      return next.handle(authReq)
+      authReq.headers.set('Authorization', 'JWT ' + authToken);
+      authReq.headers.set('X-CSRFToken', this.getCookie('csrftoken'));
+
+      return next.handle(authReq);
     }
     return next.handle(req);
-   
+  }
+
+  getCookie(name: string): string {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + '=') {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue || '';
   }
 }
